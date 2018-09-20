@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.hstypay</groupId>
+        <artifactId>hppay-framework</artifactId>
+        <version>1.0.8-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>hppay-framework-service</artifactId>
+    <packaging>pom</packaging>
+    <name>工具-平台支持工具-服务发布</name>
+
+    <modules>
+        <module>framework-service-support</module>
+        <module>framework-service-hessian</module>
+    </modules>
+</project>

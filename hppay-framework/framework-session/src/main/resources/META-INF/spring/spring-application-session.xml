@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/osgi
+		http://www.springframework.org/schema/osgi/spring-osgi.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName">
+    <!-- aspectj aop功能  -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+    <!-- 包扫描  -->
+    <context:component-scan base-package="com.hstypay.framework.session" />
+
+    <!-- 定义session的cache访问客户端 -->
+    <bean id="sessionCacheClient" class="com.hstypay.framework.cache.CustomCacheClient">
+        <property name="cacheConfPrefix" value="session" />
+        <property name="cacheName" value="session-cache" />
+    </bean>
+</beans>

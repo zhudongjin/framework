@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/osgi
+		http://www.springframework.org/schema/osgi/spring-osgi.xsd
+        http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/cache
+		http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName">
+
+    <context:annotation-config />
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+    <context:component-scan base-package="com.hstypay.framework.cache" />
+
+    <bean id="keyGenerator" class="com.hstypay.framework.cache.support.CustomKeyGenerator"/>
+
+    <!-- 定义默认cache注解使用的cache -->
+    <bean id="defaultCache" class="com.hstypay.framework.cache.CustomCacheClient">
+        <property name="cacheName" value="defaultCache"/>
+        <property name="expire" value="3600"/>
+        <property name="cacheConfPrefix" value="default"/>
+        <property name="attach2SpringCache" value="true"/>
+    </bean>
+
+    <!-- 定义默认本地cache -->
+    <bean id="localEhCache" class="com.hstypay.framework.cache.CustomCacheClient">
+        <property name="cacheName" value="localEhCache"/>
+        <property name="expire" value="3600"/>
+        <property name="cacheConfPrefix" value="localEh"/>
+        <property name="attach2SpringCache" value="true"/>
+    </bean>
+
+    <!-- spring的缓存管理器 -->
+    <bean id="cacheManager" class="com.hstypay.framework.cache.support.CustomerCacheManager">
+        <property name="caches">
+            <set>
+                <ref bean="defaultCache"/>
+                <ref bean="localEhCache"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 启用Cache注解 -->
+    <cache:annotation-driven cache-manager="cacheManager" key-generator="keyGenerator" proxy-target-class="true"/>
+</beans>

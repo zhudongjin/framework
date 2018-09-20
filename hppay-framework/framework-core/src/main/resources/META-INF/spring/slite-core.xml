@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-autowire="byName">
+	
+	<!-- 定义自动注入 -->
+	<context:annotation-config />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	<!-- 定义默认的placeholder从app-config.properties加载 -->
+	<context:property-placeholder location="classpath:app-config.properties" ignore-unresolvable="true"/>
+	<!-- 定义系统配置的bean,业务只需要注入该bean即可 -->
+	<bean id="appConfig" class="cn.swiftpass.slite.config.ReloadableAppConfig" />
+	<!-- ApplicationContext的获取bean -->
+	<bean class="cn.swiftpass.slite.lang.AppContextUtils" />
+		
+</beans>
